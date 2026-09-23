@@ -20,24 +20,24 @@
 --- ACT-3 complete: trip state + audit timeline (03_act3_complete.sql)
                   id                  | status |              driver_id               | actual_km | actual_minutes | fare_cents |         completed_at          |          updated_at           
 --------------------------------------+--------+--------------------------------------+-----------+----------------+------------+-------------------------------+-------------------------------
- f0000000-0000-4000-8000-000000000001 | PAID   | 20000000-0000-4000-8000-000000000001 |         4 |              8 |       1300 | 2026-09-22 12:38:14.564139+01 | 2026-09-23 12:19:14.564139+01
+ f0000000-0000-4000-8000-000000000001 | PAID   | 20000000-0000-4000-8000-000000000001 |         4 |              8 |       1300 | 2026-09-22 13:15:50.491835+01 | 2026-09-23 12:56:50.491835+01
 (1 row)
 
  from_status | to_status | actor  | payload |          created_at           
 -------------+-----------+--------+---------+-------------------------------
-             | PAID      | SYSTEM | {}      | 2026-09-23 12:19:14.564139+01
+             | PAID      | SYSTEM | {}      | 2026-09-23 12:56:50.491835+01
 (1 row)
 
   ✓ 03_act3_complete.sql ran
 --- ACT-4 settle: full money trail of the trip (04_act4_settle.sql)
             transaction_id            | owner_type |  side  | entry_type | amount_cents | currency |          created_at           
 --------------------------------------+------------+--------+------------+--------------+----------+-------------------------------
- 90000000-0000-4000-8000-000000000001 | RIDER      | DEBIT  | FARE       |         1300 | USD      | 2026-09-23 12:19:14.564139+01
- 90000000-0000-4000-8000-000000000001 | PLATFORM   | CREDIT | FARE       |         1300 | USD      | 2026-09-23 12:19:14.564139+01
- 90000000-0000-4000-8000-000000000002 | PLATFORM   | DEBIT  | FARE       |         1040 | USD      | 2026-09-23 12:19:14.564139+01
- 90000000-0000-4000-8000-000000000002 | DRIVER     | CREDIT | FARE       |         1040 | USD      | 2026-09-23 12:19:14.564139+01
- 90000000-0000-4000-8000-000000000003 | PLATFORM   | DEBIT  | COMMISSION |          260 | USD      | 2026-09-23 12:19:14.564139+01
- 90000000-0000-4000-8000-000000000003 | PLATFORM   | CREDIT | COMMISSION |          260 | USD      | 2026-09-23 12:19:14.564139+01
+ 90000000-0000-4000-8000-000000000001 | RIDER      | DEBIT  | FARE       |         1300 | USD      | 2026-09-23 12:56:50.491835+01
+ 90000000-0000-4000-8000-000000000001 | PLATFORM   | CREDIT | FARE       |         1300 | USD      | 2026-09-23 12:56:50.491835+01
+ 90000000-0000-4000-8000-000000000002 | PLATFORM   | DEBIT  | FARE       |         1040 | USD      | 2026-09-23 12:56:50.491835+01
+ 90000000-0000-4000-8000-000000000002 | DRIVER     | CREDIT | FARE       |         1040 | USD      | 2026-09-23 12:56:50.491835+01
+ 90000000-0000-4000-8000-000000000003 | PLATFORM   | DEBIT  | COMMISSION |          260 | USD      | 2026-09-23 12:56:50.491835+01
+ 90000000-0000-4000-8000-000000000003 | PLATFORM   | CREDIT | COMMISSION |          260 | USD      | 2026-09-23 12:56:50.491835+01
 (6 rows)
 
  payments | captured 
@@ -90,7 +90,7 @@ DETAIL:  Key (rider_id)=(10000000-0000-4000-8000-000000000001) already exists.
 psql:queries/invalid_states.sql:56: ERROR:  TRP-02 illegal trip transition: REQUESTED -> ON_TRIP
 CONTEXT:  PL/pgSQL function trip_transition_guard() line 8 at RAISE
 psql:queries/invalid_states.sql:72: ERROR:  new row for relation "trips" violates check constraint "trips_cancel_fee_only_when_cancelled"
-DETAIL:  Failing row contains (f0000000-0000-4000-8000-000000000005, 40000000-0000-4000-8000-000000000001, null, REQUESTED, null, 37.775, -122.415, 37.787, -122.401, b1000000-0000-4000-8000-000000000001, USD, 250, 80, 30, 150, 5, 10, 1500, null, null, null, 500, null, null, null, null, 2026-09-23 12:19:14.946269+01, null, null, 2026-09-23 12:19:14.946269+01).
+DETAIL:  Failing row contains (f0000000-0000-4000-8000-000000000005, 40000000-0000-4000-8000-000000000001, null, REQUESTED, null, 37.775, -122.415, 37.787, -122.401, b1000000-0000-4000-8000-000000000001, USD, 250, 80, 30, 150, 5, 10, 1500, null, null, null, 500, null, null, null, null, 2026-09-23 12:56:50.655602+01, null, null, 2026-09-23 12:56:50.655602+01).
   ✓ IND-1  second active trip for one rider rejected (partial unique index)
   ✓ IND-2  REQUESTED -> ON_TRIP rejected (transition-guard trigger)
   ✓ IND-3  fee on a non-cancelled trip rejected (CHECK constraint)

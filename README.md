@@ -20,6 +20,8 @@ v1 design, pre-implementation. Proven against a **real PostgreSQL 14 server**
 | `migrations/0002_seed_nimbus.sql` | Small, balanced seed dataset |
 | `queries/` | The five action queries + EXPLAIN + invalid-state attempts |
 | `STEP5_PROOF.md` | The proof: query plans showing index use, three rejected invalid states |
+| `evidence/screenshots/` | Terminal screenshots of the three constraint violations being rejected by PostgreSQL |
+| `evidence/make_rejection_screenshots.py` | Regenerates the screenshots from a live PostgreSQL run |
 | `model_proof.py` | SQLite mirror; attempts to violate every rule (31/31 green) |
 | `step5_run.sh` | One-command reproduction of the full PostgreSQL proof |
 
@@ -28,7 +30,9 @@ v1 design, pre-implementation. Proven against a **real PostgreSQL 14 server**
 1. **The diagram** — `DATA_MODEL.md` §3.1 (mermaid ER diagram), `API_DESIGN.md` §4.
 2. **State machine drawing** — `API_DESIGN.md` §6 (`stateDiagram-v2` for trips).
 3. **Query plan output showing index use** — `STEP5_PROOF.md` §4 (`idx_drivers_available`, `idx_ledger_entries_trip`).
-4. **Three constraint violations rejected** — `STEP5_PROOF.md` §5 + live transcript `step5_run.out`.
+4. **Three constraint violations rejected** — screenshots in `evidence/screenshots/`
+   (IND-1 partial unique index, IND-2 transition-guard trigger, IND-3 CHECK
+   constraint), `STEP5_PROOF.md` §5, live transcript `step5_run.out`.
 
 ## Reproduce
 
